@@ -1,0 +1,25 @@
+BST Inorder Traversal:
+Voter ID: 20 -> Candidate: Candidate A
+Voter ID: 30 -> Candidate: Candidate B
+Voter ID: 40 -> Candidate: Candidate B
+Voter ID: 50 -> Candidate: Candidate A
+Voter ID: 60 -> Candidate: Candidate C
+Voter ID: 70 -> Candidate: Candidate C
+Voter ID: 80 -> Candidate: Candidate A
+
+Voter ID 40 Found
+
+Deleting Voter ID 20...
+
+BST After Deletion:
+Voter ID: 30 -> Candidate: Candidate B
+Voter ID: 40 -> Candidate: Candidate B
+Voter ID: 50 -> Candidate: Candidate A
+Voter ID: 60 -> Candidate: Candidate C
+Voter ID: 70 -> Candidate: Candidate C
+Voter ID: 80 -> Candidate: Candidate A
+
+Election Results:
+Candidate B = 2 votes
+Candidate A = 2 votes
+Candidate C = 2 votes
