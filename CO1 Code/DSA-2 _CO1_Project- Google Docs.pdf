@@ -1,0 +1,195 @@
+import java.util.HashMap;
+
+// Node Class for BST
+class Node {
+
+    int voterId;
+    String candidateName;
+
+    Node left, right;
+
+    // Constructor
+    Node(int voterId, String candidateName) {
+        this.voterId = voterId;
+        this.candidateName = candidateName;
+        left = right = null;
+    }
+}
+
+// BST Class
+class BST {
+
+    Node root;
+
+    // Insert Operation
+    Node insert(Node root, int voterId, String candidateName) {
+
+        if (root == null) {
+            return new Node(voterId, candidateName);
+        }
+
+        if (voterId < root.voterId) {
+            root.left = insert(root.left, voterId, candidateName);
+        }
+
+        else if (voterId > root.voterId) {
+            root.right = insert(root.right, voterId, candidateName);
+        }
+
+        else {
+            System.out.println("Duplicate Vote Detected for Voter ID: " + voterId);
+        }
+
+        return root;
+    }
+
+    // Search Operation
+    boolean search(Node root, int voterId) {
+
+        if (root == null) {
+            return false;
+        }
+
+        if (root.voterId == voterId) {
+            return true;
+        }
+
+        if (voterId < root.voterId) {
+            return search(root.left, voterId);
+        }
+
+        return search(root.right, voterId);
+    }
+
+    // Find Minimum Value
+    Node minValue(Node root) {
+
+        while (root.left != null) {
+            root = root.left;
+        }
+
+        return root;
+    }
+
+    // Delete Operation
+    Node delete(Node root, int voterId) {
+
+        if (root == null) {
+            return root;
+        }
+
+        if (voterId < root.voterId) {
+            root.left = delete(root.left, voterId);
+        }
+
+        else if (voterId > root.voterId) {
+            root.right = delete(root.right, voterId);
+        }
+
+        else {
+
+            // One child or no child
+            if (root.left == null) {
+                return root.right;
+            }
+
+            else if (root.right == null) {
+                return root.left;
+            }
+
+            // Two children
+            Node temp = minValue(root.right);
+
+            root.voterId = temp.voterId;
+            root.candidateName = temp.candidateName;
+
+            root.right = delete(root.right, temp.voterId);
+        }
+
+        return root;
+    }
+
+    // Inorder Traversal
+    void inorder(Node root) {
+
+        if (root != null) {
+
+            inorder(root.left);
+
+            System.out.println(
+                "Voter ID: " + root.voterId +
+                " -> Candidate: " + root.candidateName
+            );
+
+            inorder(root.right);
+        }
+    }
+
+    // Vote Counting
+    void voteCount(Node root, HashMap<String, Integer> result) {
+
+        if (root != null) {
+
+            voteCount(root.left, result);
+
+            result.put(
+                root.candidateName,
+                result.getOrDefault(root.candidateName, 0) + 1
+            );
+
+            voteCount(root.right, result);
+        }
+    }
+}
+
+// Main Class
+public class SecureVoteBST {
+
+    public static void main(String[] args) {
+
+        BST tree = new BST();
+
+        // Insert Data into BST
+        tree.root = tree.insert(tree.root, 50, "Candidate A");
+        tree.root = tree.insert(tree.root, 30, "Candidate B");
+        tree.root = tree.insert(tree.root, 70, "Candidate C");
+        tree.root = tree.insert(tree.root, 20, "Candidate A");
+        tree.root = tree.insert(tree.root, 40, "Candidate B");
+        tree.root = tree.insert(tree.root, 60, "Candidate C");
+        tree.root = tree.insert(tree.root, 80, "Candidate A");
+
+        // Display BST
+        System.out.println("BST Inorder Traversal:");
+        tree.inorder(tree.root);
+
+        // Search Example
+        int searchId = 40;
+
+        if (tree.search(tree.root, searchId)) {
+            System.out.println("\nVoter ID " + searchId + " Found");
+        }
+
+        else {
+            System.out.println("\nVoter ID " + searchId + " Not Found");
+        }
+
+        // Delete Example
+        System.out.println("\nDeleting Voter ID 20...");
+        tree.root = tree.delete(tree.root, 20);
+
+        // Display After Deletion
+        System.out.println("\nBST After Deletion:");
+        tree.inorder(tree.root);
+
+        // Vote Counting
+        HashMap<String, Integer> result = new HashMap<>();
+
+        tree.voteCount(tree.root, result);
+
+        System.out.println("\nElection Results:");
+
+        for (String candidate : result.keySet()) {
+            System.out.println(candidate + " = " + result.get(candidate) + " votes");
+        }
+    }
+}
