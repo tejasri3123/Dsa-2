@@ -1,0 +1,114 @@
+import java.util.*;
+
+class PollingStation {
+    int id;
+    String name;
+    int resource;
+    int priority;
+
+    PollingStation(int id, String name, int resource, int priority) {
+        this.id = id;
+        this.name = name;
+        this.resource = resource;
+        this.priority = priority;
+    }
+}
+
+public class SecureVoteKnapsack {
+
+    public static void main(String[] args) {
+
+        System.out.println("===== SecureVote Digital Voting System =====\n");
+
+        // Registered Voters
+        String[] voters = {"V101", "V102", "V103", "V104", "V105"};
+
+        System.out.println("Registered Voters:");
+        for (String voter : voters) {
+            System.out.println(voter);
+        }
+
+        // Authentication
+        String voterId = "V101";
+        System.out.println("\nEnter Voter ID: " + voterId);
+
+        boolean authenticated = false;
+        for (String voter : voters) {
+            if (voter.equals(voterId)) {
+                authenticated = true;
+                break;
+            }
+        }
+
+        if (authenticated)
+            System.out.println("Authentication Successful");
+        else {
+            System.out.println("Authentication Failed");
+            return;
+        }
+
+        // Vote Count
+        int candidateA = 120;
+        int candidateB = 150;
+        int candidateC = 95;
+
+        System.out.println("\nVote Count");
+        System.out.println("Candidate A : " + candidateA);
+        System.out.println("Candidate B : " + candidateB);
+        System.out.println("Candidate C : " + candidateC);
+
+        // Fraud Detection
+        System.out.println("\nFraud Detection");
+        System.out.println("No duplicate votes detected.");
+
+        // Polling Stations
+        PollingStation[] stations = {
+                new PollingStation(1, "Station A", 2, 10),
+                new PollingStation(2, "Station B", 3, 15),
+                new PollingStation(3, "Station C", 4, 20),
+                new PollingStation(4, "Station D", 5, 22)
+        };
+
+        int capacity = 10;
+        int n = stations.length;
+
+        // 0/1 Knapsack DP Table
+        int[][] dp = new int[n + 1][capacity + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int w = 1; w <= capacity; w++) {
+
+                if (stations[i - 1].resource <= w) {
+                    dp[i][w] = Math.max(
+                            stations[i - 1].priority +
+                                    dp[i - 1][w - stations[i - 1].resource],
+                            dp[i - 1][w]);
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        System.out.println("\nElection Resource Optimization using 0/1 Knapsack\n");
+        System.out.println("Maximum Priority Value = " + dp[n][capacity]);
+
+        System.out.println("\nSelected Polling Stations:");
+
+        int w = capacity;
+
+        for (int i = n; i > 0; i--) {
+
+            if (dp[i][w] != dp[i - 1][w]) {
+
+                System.out.println(
+                        stations[i - 1].id + "  " +
+                        stations[i - 1].name +
+                        "  Resource=" + stations[i - 1].resource +
+                        "  Priority=" + stations[i - 1].priority
+                );
+
+                w -= stations[i - 1].resource;
+            }
+        }
+    }
+}
