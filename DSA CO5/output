@@ -1,0 +1,22 @@
+SecureVote - Election Analytics System
+--------------------------------------
+
+Before Heap Sort:
+101  Candidate A  450 votes
+102  Candidate B  620 votes
+103  Candidate C  300 votes
+104  Candidate D  780 votes
+105  Candidate E  510 votes
+
+Fraud Detection Check:
+No Fraudulent Activity Detected.
+
+Election Results After Heap Sort:
+103  Candidate C  300 votes
+101  Candidate A  450 votes
+105  Candidate E  510 votes
+102  Candidate B  620 votes
+104  Candidate D  780 votes
+
+Winner:
+Candidate D with 780 votes
