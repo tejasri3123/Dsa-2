@@ -1,0 +1,28 @@
+===== SecureVote Digital Voting System =====
+
+Registered Voters:
+V101
+V102
+V103
+V104
+V105
+
+Enter Voter ID: V101
+Authentication Successful
+
+Vote Count
+Candidate A : 120
+Candidate B : 150
+Candidate C : 95
+
+Fraud Detection
+No duplicate votes detected.
+
+Election Resource Optimization using 0/1 Knapsack
+
+Maximum Priority Value = 47
+
+Selected Polling Stations:
+4  Station D  Resource=5  Priority=22
+2  Station B  Resource=3  Priority=15
+1  Station A  Resource=2  Priority=10
